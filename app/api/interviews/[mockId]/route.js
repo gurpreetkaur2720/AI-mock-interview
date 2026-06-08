@@ -17,6 +17,7 @@ export async function GET(_request, { params }) {
     }
 
     return NextResponse.json({ interview }, { status: 200 });
+    
   } catch (error) {
     return NextResponse.json(
       { message: "Failed to load interview", error: error.message },

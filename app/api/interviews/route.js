@@ -15,9 +15,9 @@ export async function GET(request) {
     }
 
     await connectToDatabase();
-
+ //
     const interviews = await MockInterview.find({ createdBy: email }).sort({
-      createdAt: -1,
+      createdAt: -1, // descending order me sort karenge taki latest interview pehle aaye
       _id: -1,
     });
 
@@ -30,9 +30,10 @@ export async function GET(request) {
   }
 }
 
-export async function POST(request) {
+export async function POST(request) { 
   try {
-    const body = await request.json();
+    const body = await request.json(); //yaha frontend se aayega interview creation
+    //  ka data jisme job details aur AI se generated questions honge 
     const {
       mockId,
       jsonMockResp,
@@ -43,14 +44,17 @@ export async function POST(request) {
       createdAt,
     } = body;
 
+    
     if (!mockId || !jsonMockResp || !jobPosition || !jobDesc || !jobExperience || !createdBy) {
       return NextResponse.json(
-        { message: "Missing interview payload" },
+        { message: "Missing interview payload" },  
         { status: 400 }
-      );
+      ); // validation check karenge ki interview creation ke liye jo bhi data required
+      //  hai wo sab frontend se aaya hai ya nahi agar koi data missing hai to error response bhejenge
     }
 
-    await connectToDatabase();
+    await connectToDatabase(); //mongoose ke through database se connect karenge taki interview 
+    // data ko database me save kar sake
 
     const interview = await MockInterview.create({
       mockId,
@@ -60,13 +64,15 @@ export async function POST(request) {
       jobExperience,
       createdBy,
       createdAt,
-    });
+    }); // MockInterview collection me ek naya document create karenge jisme interview ka data save hoga
 
-    return NextResponse.json({ interview }, { status: 201 });
+    return NextResponse.json({ interview }, { status: 201 }); // agar interview successfully 
+    // create ho jata hai to uska data json format me frontend ko bhejenge
+    
   } catch (error) {
     return NextResponse.json(
       { message: "Failed to create interview", error: error.message },
-      { status: 500 }
-    );
+      { status: 500 } //
+    ); 
   }
 }

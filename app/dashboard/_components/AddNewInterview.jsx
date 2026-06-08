@@ -77,8 +77,9 @@ function AddNewInterview({ currentUser, isOpen = false, onOpen, onClose }) {
     }
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+// -----------------------------------------------------------------------------------------
+  const onSubmit = async (e) => { // form submit hone par ye function call hoga
+    e.preventDefault(); //normal form submit hone se page reload hota hai ye usko rokne ke liye
 
     if (!currentUser?.email) {
       toast.error("Please sign in before creating an interview");
@@ -88,6 +89,7 @@ function AddNewInterview({ currentUser, isOpen = false, onOpen, onClose }) {
     setLoading(true);
   
 
+// ---------------------API call to generate interview questions based on user input -----------------------------------
     try {
       const generatedResponse = await fetch('/api/interviews/generate', {
         method: 'POST',
@@ -102,20 +104,24 @@ function AddNewInterview({ currentUser, isOpen = false, onOpen, onClose }) {
       });
 
       const generatedData = await generatedResponse.json();
+     //ai se generated questions ko json format me receive honge 
 
       if (!generatedResponse.ok) {
         throw new Error(generatedData.message || 'Failed to generate interview questions');
       }
 
-      const mockResponse = generatedData.questions;
+      const mockResponse = generatedData.questions; // AI se generated questions ko mockResponse 
+      // variable me store karenge taki usko database me save kar sake
       
+
+// ---------------------API call to save the generated interview in database -----------------------------------
       const res = await fetch('/api/interviews', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          mockId: uuidv4(),
+          mockId: uuidv4(), //unique id generate karenge har interview ke liye
           jsonMockResp: mockResponse,
           jobPosition,
           jobDesc: jobDescription,
@@ -160,7 +166,9 @@ function AddNewInterview({ currentUser, isOpen = false, onOpen, onClose }) {
             </DialogTitle>
           </DialogHeader>
           <DialogDescription>
-            <form onSubmit={onSubmit}>
+
+{/* -------------------------------------form-------------------------------------------------------- */}
+            <form onSubmit={onSubmit}> 
               <div>
                 <div className="mt-7 my-3">
                   <label>Job Role/Position</label>
@@ -225,6 +233,8 @@ function AddNewInterview({ currentUser, isOpen = false, onOpen, onClose }) {
                 </Button>
               </div>
             </form>
+{/* ----------------------------------------------------------------------------------------------- */}
+
           </DialogDescription>
         </DialogContent>
       </Dialog>

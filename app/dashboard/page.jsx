@@ -18,9 +18,15 @@ import { useCurrentUser } from "@/lib/auth-storage";
 
 function Dashboard() {
   const router = useRouter();
-  const { user, isReady } = useCurrentUser();
+
+  const { user, isReady } = useCurrentUser();   //custom hook login in user ka 
+  // data layega aur isReady se pata chalega ki user data load ho chuka hai ya nahi
+
   const [interviewData, setInterviewData] = useState([]);
+
   const [isNewInterviewModalOpen, setIsNewInterviewModalOpen] = useState(false);
+  // is new interview modal open hai ya nahi ye state manage karega
+
   const [statsCards, setStatsCards] = useState([
     {
       icon: <ListChecks size={32} className="text-indigo-600" />,
@@ -39,7 +45,7 @@ function Dashboard() {
     }
   ]);
 
-  const fetchInterviews = async () => {
+  const fetchInterviews = async () => { // interview data fetch karne ke liye API call karenge
     if (!user?.email) {
       toast.error("User email not found");
       return;
@@ -48,7 +54,7 @@ function Dashboard() {
     try {
       const response = await fetch('/api/fetchUserData', {
         method: 'POST',
-        headers: {
+        headers: { 
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -174,18 +180,24 @@ function Dashboard() {
             <Zap size={24} className="text-yellow-500" />
             Create AI Mock Interview
           </h2>
+
+{/* -------------------------------------------------------------------------- */}
           <button 
             onClick={() => setIsNewInterviewModalOpen(true)}
             className="flex items-center bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition-colors"
           >
             <Plus size={20} className="mr-2" />
             New Interview
-          </button>
+          </button> 
+            {/* New Interview button pe click karne se AddNewInterview component ka
+             modal open hoga jisme user apne job details fill karke new interview create kar sakta hai */}
+
+{/* -------------------------------------------------------------------------- */}
         </div>
 
         {/* Add New Interview Component */}
         <div className='grid grid-cols-1 sm:grid-cols-3 gap-6'>
-          <AddNewInterview 
+          <AddNewInterview   //component call kar rahe hain jisme interview create karne ka form hoga
             isOpen={isNewInterviewModalOpen} 
             onOpen={() => setIsNewInterviewModalOpen(true)}
             onClose={() => setIsNewInterviewModalOpen(false)} 

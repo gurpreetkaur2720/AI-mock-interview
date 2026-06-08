@@ -154,10 +154,13 @@ const RecordAnswerSection = ({
     try {
       let feedbackData = { rating: 0, feedback: "Feedback could not be generated." };
 
+
+
+//------------------- feedback generation ke liye AI API call karenge------------------
       try {
         const feedbackGenResponse = await fetch('/api/interviews/feedback', {
           method: 'POST',
-          headers: {
+          headers: { 
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -167,7 +170,7 @@ const RecordAnswerSection = ({
         });
 
         const parsedFeedback = await feedbackGenResponse.json();
-
+ //response json ko read karega---------------
         if (feedbackGenResponse.ok) {
           feedbackData = parsedFeedback;
         } else {
@@ -192,12 +195,15 @@ const RecordAnswerSection = ({
         createdAt: moment().format("DD-MM-YYYY"),
       };
 
+
+
+//----------------------------API call to save user's answer ---------------------------------------
       const response = await fetch(`/api/interviews/${interviewData?.mockId}/answers`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(answerRecord),
+        body: JSON.stringify(answerRecord), //upr bana hua answerRecord 
       });
 
       if (!response.ok) {

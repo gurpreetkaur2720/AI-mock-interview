@@ -1,7 +1,10 @@
+//record answer section ke liye route jo user ke answers ko save karega
+
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongoose";
 import UserAnswer from "@/models/UserAnswer";
 
+// This route handles fetching and saving user answers for a specific mock interview
 export async function GET(_request, { params }) {
   try {
     await connectToDatabase();
@@ -20,6 +23,7 @@ export async function GET(_request, { params }) {
   }
 }
 
+// -------------------This route saves a user's answer for a specific mock interview
 export async function POST(request, { params }) {
   try {
     const body = await request.json();
@@ -38,7 +42,8 @@ export async function POST(request, { params }) {
       mockIdRef: params.mockId,
     });
 
-    return NextResponse.json({ answer }, { status: 201 });
+    return NextResponse.json({ answer }, { status: 201 }); //success response
+    
   } catch (error) {
     return NextResponse.json(
       { message: "Failed to save answer", error: error.message },

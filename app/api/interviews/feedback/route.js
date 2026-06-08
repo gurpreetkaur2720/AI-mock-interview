@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { generateGeminiText, parseJsonFromAiText } from "@/lib/gemini-server";
-
+ 
+// This route takes a question and user answer and sends it to Gemini for evaluation
 export async function POST(request) {
   try {
     const { question, userAnswer } = await request.json();
@@ -12,8 +13,8 @@ export async function POST(request) {
       );
     }
 
-    const prompt = [
-      "You are an interview evaluator.",
+    const prompt = [ //
+      "You are an interview evaluator.", //porompt bnega aur gemini ko jayega taki wo user ke answer ko evaluate kar sake
       `Question: ${question}`,
       `Candidate answer: ${userAnswer}`,
       "Return ONLY valid JSON with this shape:",
@@ -21,8 +22,8 @@ export async function POST(request) {
       "rating must be a number between 1 and 10."
     ].join("\n");
 
-    const text = await generateGeminiText(prompt);
-    const parsed = parseJsonFromAiText(text);
+    const text = await generateGeminiText(prompt); // prompt ja raha h gemini-server aur feedback ayegi text format me
+    const parsed = parseJsonFromAiText(text); // text feedback ko json format me parse karenge
 
     const numericRating = Number(parsed?.rating);
     const safeRating = Number.isFinite(numericRating)
@@ -38,7 +39,7 @@ export async function POST(request) {
       );
     }
 
-    return NextResponse.json(
+    return NextResponse.json( //frontend ko response bhejenge rating, feedback
       { rating: safeRating, feedback },
       { status: 200 }
     );

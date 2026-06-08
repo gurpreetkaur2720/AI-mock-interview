@@ -48,8 +48,9 @@ export async function POST(request) {
     }
 
     let parsed;
-    try {
-      const text = await generateGeminiText(prompt);
+    try { // AI questions generate karega  aur use frontend ko bhejega  ANI
+      const text = await generateGeminiText(prompt); 
+      // prompt ja raha h gemini-server  
       parsed = parseJsonFromAiText(text);
     } catch (aiErr) {
       console.error('AI generation failed, returning sample fallback:', aiErr);
@@ -59,23 +60,26 @@ export async function POST(request) {
         { question: `Explain a concept from ${jobDesc} you find important.`, answer: `Describe the concept clearly with examples.` },
         { question: `How do you optimize performance in ${jobDesc}?`, answer: `Discuss profiling, caching, and algorithmic improvements.` },
         { question: `Describe a time you overcame a difficult bug or deadline.`, answer: `Summarize situation, action, and result.` },
-      ];
+      ]; 
 
-      return NextResponse.json({ questions: sample }, { status: 200 });
+      return NextResponse.json({ questions: sample }, { status: 200 }); 
+      //ya to AI se generated questions return karenge ya phir agar AI se 
+      // error aata hai to ek safe sample set return karenge taki frontend pe interview 
+      // creation process break na ho
     }
     const questions = normalizeQuestions(parsed)
       .map((item) => ({
         question: String(item?.question || "").trim(),
-        answer: String(item?.answer || "").trim(),
+        answer: String(item?.answer || "").trim(),//
       }))
       .filter((item) => item.question && item.answer)
-      .slice(0, 5);
+      .slice(0, 5); // Ensure we only return 5 valid question-answer pairs
 
     if (questions.length === 0) {
       return NextResponse.json(
         { message: "AI returned an invalid question format" },
         { status: 422 }
-      );
+      ); 
     }
 
     return NextResponse.json({ questions }, { status: 200 });

@@ -72,14 +72,14 @@ function AuthForm({ mode }) {
               {isSignUp ? "Create your MockMate account" : "Welcome back to MockMate"}
             </h1>
             <p className="mt-4 max-w-md text-sm leading-6 text-white/70">
-              Store interview history in MongoDB, manage it through Compass, and keep every mock interview tied to your own account.
+            Welcome to MockMate, your AI-powered interview practice platform!
             </p>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
             <p className="text-sm uppercase tracking-[0.2em] text-cyan-200/80">What changes</p>
             <p className="mt-3 text-sm leading-6 text-white/75">
-              Clerk is removed. Sign in now uses a local account backed by MongoDB, and the dashboard loads your interview history from Mongoose models.
+              Sharpen your interview skills with AI-generated questions, answer analysis, and performance monitoring.
             </p>
           </div>
         </div>

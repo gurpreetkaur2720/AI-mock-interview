@@ -32,8 +32,7 @@ export async function GET(request) {
 
 export async function POST(request) { 
   try {
-    const body = await request.json(); //yaha frontend se aayega interview creation
-    //  ka data jisme job details aur AI se generated questions honge 
+    const body = await request.json(); //yaha frontend se aayega interview creation ka data 
     const {
       mockId,
       jsonMockResp,

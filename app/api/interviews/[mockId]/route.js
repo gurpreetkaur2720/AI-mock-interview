@@ -5,11 +5,11 @@ import UserAnswer from "@/models/UserAnswer";
 
 export async function GET(_request, { params }) {
   try {
-    await connectToDatabase();
+    await connectToDatabase(); 
 
-    const interview = await MockInterview.findOne({ mockId: params.mockId });
+    const interview = await MockInterview.findOne({ mockId: params.mockId }); //start -> page
 
-    if (!interview) {
+    if (!interview) {  //database se interview details lega 
       return NextResponse.json(
         { message: "Interview not found" },
         { status: 404 }

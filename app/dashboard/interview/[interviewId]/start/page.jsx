@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 
-const StartInterview = ({ params }) => {
+const StartInterview = ({ params }) => { // url se interview id le rahe hai for fetchig interview details
   const [interViewData, setInterviewData] = useState();
-  const [mockInterviewQuestion, setMockInterviewQuestion] = useState();
-  const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
+  const [mockInterviewQuestion, setMockInterviewQuestion] = useState(); //question array
+  const [activeQuestionIndex, setActiveQuestionIndex] = useState(0); //curent queation number
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const StartInterview = ({ params }) => {
   const GetInterviewDetails = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/interviews/${params.interviewId}`);
+      const response = await fetch(`/api/interviews/${params.interviewId}`); //req backend ko gyi 
       const data = await response.json();
 
       if (!response.ok) {
@@ -97,7 +97,7 @@ const StartInterview = ({ params }) => {
         )}
         {activeQuestionIndex == mockInterviewQuestion?.length - 1 && (
           <Link href={'/dashboard/interview/' + interViewData?.mockId + '/feedback'}>
-            <Button>End Interview</Button>
+            <Button>End Interview</Button> //feedbak page open
           </Link>
         )}
       </div>

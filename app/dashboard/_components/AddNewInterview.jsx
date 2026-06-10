@@ -78,7 +78,7 @@ function AddNewInterview({ currentUser, isOpen = false, onOpen, onClose }) {
   };
 
 // -----------------------------------------------------------------------------------------
-  const onSubmit = async (e) => { // form submit hone par ye function call hoga
+  const onSubmit = async (e) => { 
     e.preventDefault(); //normal form submit hone se page reload hota hai ye usko rokne ke liye
 
     if (!currentUser?.email) {

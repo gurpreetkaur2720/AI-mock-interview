@@ -188,7 +188,7 @@ export default function ResourcesPage() {
                 title: "Skill Assessment",
                 description: "Identify and improve your key skills",
                 icon: <Brain className="w-12 h-12 text-purple-600 mx-auto mb-4" />,
-                url: "https://www.skillvalue.com/"
+                url: "https://codesignal.com/"
               }
             ].map((tip, index) => (
               <div 

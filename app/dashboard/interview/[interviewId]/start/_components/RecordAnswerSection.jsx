@@ -26,7 +26,7 @@ const RecordAnswerSection = ({
 
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
+    //built in api hai jo speech to text 
     setSpeechSupported(Boolean(SpeechRecognition));
 
     if (typeof window !== "undefined" && SpeechRecognition) {
@@ -51,9 +51,9 @@ const RecordAnswerSection = ({
       };
 
       recognition.onerror = (event) => {
-        // Provide clearer guidance for common speech-recognition errors
+       
         if (event?.error === 'no-speech') {
-          // Retry automatically a few times before failing
+          
           if (noSpeechRetriesRef.current < MAX_NO_SPEECH_RETRIES) {
             noSpeechRetriesRef.current += 1;
             setNoSpeechRetries(noSpeechRetriesRef.current);
@@ -90,8 +90,8 @@ const RecordAnswerSection = ({
 
   const EnableWebcam = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      if (webcamRef.current) {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });//
+      if (webcamRef.current) { //browser user se puch raha allow microphone and camera
         webcamRef.current.srcObject = stream;
       }
       setWebcamEnabled(true);
@@ -123,7 +123,7 @@ const RecordAnswerSection = ({
       return;
     }
 
-    // Ensure microphone permission is granted (some browsers need a getUserMedia prompt)
+    // Ensure microphone permission is granted 
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
     } catch (permError) {
